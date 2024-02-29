@@ -9,14 +9,15 @@ import {
   View,
 } from "react-native";
 import Constants from "expo-constants";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../context/AuthContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export const Onboarding = ({ route }) => {
+export const Onboarding = () => {
   const [firstName, setFirstName] = useState("");
   const [email, setEmail] = useState("");
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
-
-  const { handleOnboardingNextPress } = route.params;
+  const { setOnboardingCompleted } = useContext(AuthContext);
 
   useEffect(() => {
     const nameValid = firstName?.length > 3;
@@ -24,6 +25,17 @@ export const Onboarding = ({ route }) => {
     if (nameValid && emailValid) setIsButtonDisabled(false);
     else setIsButtonDisabled(true);
   }, [email, firstName]);
+
+  const user = { firstName, email };
+
+  const onNextPress = async () => {
+    try {
+      await AsyncStorage.setItem('user', JSON.stringify(user));
+      setOnboardingCompleted(true);
+    } catch (error) {
+      console.error('ERROR', error);
+    }
+  };
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === "ios" ? "padding" : "height"}>
@@ -56,7 +68,7 @@ export const Onboarding = ({ route }) => {
         </View>
       </View>
       <View style={[styles.footer, isButtonDisabled ? "" : styles.buttonDisabled]}>
-        <Pressable style={styles.button} disabled={isButtonDisabled} onPress={handleOnboardingNextPress}>
+        <Pressable style={styles.button} disabled={isButtonDisabled} onPress={onNextPress}>
           <Text style={styles.buttonText}>Next</Text>
         </Pressable>
       </View>
