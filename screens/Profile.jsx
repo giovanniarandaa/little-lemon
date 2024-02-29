@@ -15,6 +15,7 @@ import Checkbox from "expo-checkbox";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { isValidPhoneNumber } from "../utils/validation";
 import { AuthContext } from "../context/AuthContext";
+import { AvatarEdit } from "../components/AvatarEdit";
 
 const DEFAULT_VALUES = {
   firstName: "",
@@ -29,7 +30,7 @@ const DEFAULT_VALUES = {
 }
 
 export const Profile = ({ navigation }) => {
-  const { updateUser } = useContext(AuthContext);
+  const { updateUser, logOut } = useContext(AuthContext);
   const [initProfile, setInitProfile] = useState(DEFAULT_VALUES);
   const [profile, setProfile] = useState(DEFAULT_VALUES);
 
@@ -93,6 +94,7 @@ export const Profile = ({ navigation }) => {
       <ScrollView style={styles.viewScroll}>
         <Text style={styles.headertext}>Personal information</Text>
         <Text style={styles.text}>Avatar</Text>
+        <AvatarEdit />
         <Text style={styles.text}>First Name</Text>
         <TextInput
           style={styles.inputBox}
@@ -178,7 +180,7 @@ export const Profile = ({ navigation }) => {
             <Text style={styles.discardBtnText}>Discard changes</Text>
           </Pressable>
         </View>
-        <Pressable style={styles.btn} onPress={() => logout()}>
+        <Pressable style={styles.btn} onPress={() => logOut()}>
           <Text style={styles.btntext}>Log out</Text>
         </Pressable>
       </ScrollView>

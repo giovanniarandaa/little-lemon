@@ -69,7 +69,13 @@ export const HomeScreen = () => {
             style={styles.heroImage}
           />
         </View>
-        <TextInput style={styles.searchBar} onChangeText={setSearchInput} />
+        <View style={styles.searchBarContainer}>
+          <Image
+            source={require("../img/searchIcon.png")}
+            style={styles.searchIcon}
+          />
+          <TextInput style={styles.searchInput} onChangeText={setSearchInput} />
+        </View>
       </View>
       <View style={styles.filtersContainer}>
         <Text style={styles.filterTitle}>ORDER FOR DELIVERY!</Text>
@@ -164,13 +170,6 @@ const styles = StyleSheet.create({
     marginTop: -30,
     borderRadius: 20,
   },
-  searchBar: {
-    backgroundColor: "#EDEFEE",
-    padding: 10,
-    borderRadius: 10,
-    justifyContent: "flex-end",
-    marginTop: 25,
-  },
   filtersContainer: {
     padding: 20,
     paddingRight: -20,
@@ -206,5 +205,22 @@ const styles = StyleSheet.create({
     resizeMode: "cover",
     width: 100,
     height: 100,
+  },
+  searchBarContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#f2f2f2",
+    borderRadius: 8,
+    paddingHorizontal: 10,
+    marginTop: 20,
+  },
+  searchInput: {
+    flex: 1,
+    height: 50,
+  },
+  searchIcon: {
+    width: 20,
+    height: 20,
+    marginRight: 8,
   },
 });

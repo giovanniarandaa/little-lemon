@@ -8,6 +8,7 @@ import { Profile } from "../screens/Profile";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { HomeScreen } from "../screens/HomeScreen";
 import { checkMenuTableAndPopulateData, selectAllMenu } from "../database";
+import { AvatarImage } from "../components/AvatarImage";
 const Stack = createNativeStackNavigator();
 export const Navigation = () => {
   const { globalState, setOnboardingCompleted, updateUser } =
@@ -56,7 +57,18 @@ export const Navigation = () => {
           />
         ) : (
           <>
-            <Stack.Screen name="Home" component={HomeScreen}/>
+            <Stack.Screen
+              name="Home"
+              component={HomeScreen}
+              options={({ navigation }) => ({
+                headerRight: () =>
+                  (
+                    <AvatarImage
+                      onPress={() => navigation.navigate("Profile")}
+                    />
+                  ),
+              })}
+            />
             <Stack.Screen
               name="Profile"
               component={Profile}

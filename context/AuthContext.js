@@ -6,6 +6,11 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const initalState = {
     isOnboardingCompleted: false,
+    user: {
+      firstName: '',
+      lastName: '',
+      email: ''
+    },
   };
   const [globalState, setGlobalState] = useState(initalState);
   const setOnboardingCompleted = async (value = true) => {
